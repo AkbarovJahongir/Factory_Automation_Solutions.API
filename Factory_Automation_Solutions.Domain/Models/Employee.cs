@@ -13,6 +13,6 @@ namespace Factory_Automation_Solutions.Domain.Models
         public string? Position { get; set; }
         public string? Phone { get; set; }
         [JsonIgnore]
-        public List<Order> Orders { get; set; }
+        public List<Order>? Orders { get; set; }
     }
 }

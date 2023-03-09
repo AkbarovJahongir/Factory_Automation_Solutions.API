@@ -1,10 +1,11 @@
 using Factory_Automation_Solutions.Application.Services;
 using Factory_Automation_Solutions.Domain.Models;
+using Factory_Automation_Solutions.Application.Common.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<ISupplierService<Supplier>, SupplierService>();
+builder.Services.AddTransient<ISupplierService<Supplier>, SupplierService>(); ;
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

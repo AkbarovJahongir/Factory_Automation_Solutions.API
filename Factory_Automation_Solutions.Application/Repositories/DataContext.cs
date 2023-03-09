@@ -14,6 +14,9 @@ namespace Factory_Automation_Solutions.Application
         public DbSet<WareHouse> WareHouses { get; set; }
         public DbSet<Product>? Products { get; set; }
         public DbSet<InComeProducts>? InComeProducts { get; set; }
+        public DbSet<Order>? Orders { get; set; }
+        public DbSet<Material>? Materials { get; set; }
+        public List<Employee>? Employees { get; set; }
         public DataContext(DbContextOptions<DataContext> options) : base(options) 
 		{
 			//Database.EnsureDeleted();
@@ -29,8 +32,9 @@ namespace Factory_Automation_Solutions.Application
 			RolesMapping(modelbuilder);
 			UsersMapping(modelbuilder);
 			ProductMapping(modelbuilder);
-			UsersMapping(modelbuilder);
 			OrderMapping(modelbuilder);
+			MaterialMapping(modelbuilder);
+			EmployeeMapping(modelbuilder);
             base.OnModelCreating(modelbuilder);
 		}
 		private void ManafactureMapping(ModelBuilder modelBuilder)
@@ -42,7 +46,7 @@ namespace Factory_Automation_Solutions.Application
 		{
 			var incomeProductsMapping = modelBuilder.Entity<InComeProducts>();
             incomeProductsMapping.HasKey(i => i.Id);
-            incomeProductsMapping.HasOne(i => i.Products).WithMany(m => m.Products).HasForeignKey(f => f.ProductId);
+            incomeProductsMapping.HasOne(i => i.Products).WithMany(m => m.InComeProducts).HasForeignKey(f => f.ProductId);
 		}
 		private void CountriesMapping(ModelBuilder modelBuilder)
 		{
@@ -95,6 +99,14 @@ namespace Factory_Automation_Solutions.Application
 			orderMapping.HasOne(x => x.Employees).WithMany(m => m.Orders).HasForeignKey(f => f.EmployeeId);
 			orderMapping.HasOne(x => x.Products).WithMany(m => m.Orders).HasForeignKey(f => f.ProductId);
 		}
-
+		private void MaterialMapping(ModelBuilder modelBuilder) {
+			var materialMapping = modelBuilder.Entity<Material>();
+			materialMapping.HasKey(x => x.Id);
+			materialMapping.HasOne(x => x.Suppliers).WithMany(m => m.Materials).HasForeignKey(f => f.SupplierId);
+		}
+		private void EmployeeMapping(ModelBuilder modelBuilder) {
+			var employeeMapping = modelBuilder.Entity<Employee>();
+			employeeMapping.HasKey(x => x.Id);
+		}
     }
 }
